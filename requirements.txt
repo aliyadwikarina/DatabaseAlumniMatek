@@ -1,0 +1,79 @@
+# requirements.txt
+# Copy this content to a file named requirements.txt
+
+pandas>=1.5.0
+openpyxl>=3.0.0
+sqlite3  # Built-in with Python
+tkinter  # Built-in with Python
+
+# Installation commands:
+# pip install pandas openpyxl
+
+# Setup Script
+import subprocess
+import sys
+import os
+
+def install_requirements():
+    """Install required packages"""
+    packages = [
+        'pandas>=1.5.0',
+        'openpyxl>=3.0.0'
+    ]
+    
+    print("Installing required packages...")
+    for package in packages:
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+            print(f"✓ {package} installed successfully")
+        except subprocess.CalledProcessError as e:
+            print(f"✗ Failed to install {package}: {e}")
+
+def check_file_structure():
+    """Check if required files exist"""
+    files_to_check = [
+        "Database Alumni S1 Departemen Matematika FMIPA UI.xlsx",
+        # Add alternative names if needed
+    ]
+    
+    print("\nChecking file structure...")
+    for file in files_to_check:
+        if os.path.exists(file):
+            print(f"✓ Found: {file}")
+            return file
+        else:
+            print(f"✗ Not found: {file}")
+    
+    print("\nPlease make sure your Excel file is in the same directory as these scripts.")
+    print("Accepted file names:")
+    for file in files_to_check:
+        print(f"  - {file}")
+    
+    return None
+
+def main():
+    print("=== ALUMNI DATABASE SETUP ===")
+    print("This script will set up the Alumni Database System")
+    print()
+    
+    # Install requirements
+    install_requirements()
+    
+    # Check files
+    excel_file = check_file_structure()
+    
+    if excel_file:
+        print(f"\n=== NEXT STEPS ===")
+        print("1. Run: python database_creator.py")
+        print("   (This will create the SQLite database)")
+        print()
+        print("2. Run: python alumni_gui.py")
+        print("   (This will open the GUI application)")
+        print()
+        print("Your Excel file found:", excel_file)
+    else:
+        print(f"\n=== SETUP INCOMPLETE ===")
+        print("Please add your Excel file to this directory first.")
+
+if __name__ == "__main__":
+    main()
